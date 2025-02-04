@@ -1,4 +1,5 @@
-import pandas as pd ; import numpy as np
+import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 import multiprocessing
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
@@ -6,10 +7,11 @@ from sklearn.model_selection import train_test_split
 import pathlib
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.ensemble import RandomForestClassifier
+import seaborn as sns
 import time
 import os
 
-os.chdir('/home/coder/work/ensae-reproductibilite-application')
+os.chdir('/home/onyxia/work/prod_ensae_application')
 TrainingData = pd.read_csv('data.csv')
 
 TrainingData.head()
@@ -37,7 +39,7 @@ fig2_pclass=sns.barplot(data=TrainingData, x= "Pclass",y= "Survived", ax=axes[1]
 
 ### Age
 
-sns.histplot(data= TrainingData, x='Age',bins=15, kde=False    )    .set_title("Distribution de l'âge")
+sns.histplot(data= TrainingData, x='Age', bins=15, kde=False).set_title("Distribution de l'âge")
 plt.show()
 
 ## Encoder les données imputées ou transformées.
