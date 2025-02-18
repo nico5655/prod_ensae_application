@@ -1,3 +1,4 @@
+import os
 from loguru import logger
 
 from sklearn.preprocessing import OneHotEncoder, MinMaxScaler
@@ -9,8 +10,9 @@ from sklearn.model_selection import train_test_split
 
 import pandas as pd
 
+
 @logger.catch
-def split_train_test(data, test_size, train_path="train.csv", test_path="test.csv"):
+def split_train_test(data, test_size, train_path="train.parquet", test_path="test.parquet"):
     """
     Split the data into training and testing sets based on the specified test size.
     Optionally, save the split datasets to CSV files.
@@ -19,9 +21,9 @@ def split_train_test(data, test_size, train_path="train.csv", test_path="test.cs
         data (pandas.DataFrame): The input data to split.
         test_size (float): The proportion of the dataset to include in the test split.
         train_path (str, optional): The file path to save the training dataset.
-            Defaults to "train.csv".
+            Defaults to "train.parquet".
         test_path (str, optional): The file path to save the testing dataset.
-            Defaults to "test.csv".
+            Defaults to "test.parquet".
 
     Returns:
         tuple: A tuple containing the training and testing datasets.
@@ -32,9 +34,15 @@ def split_train_test(data, test_size, train_path="train.csv", test_path="test.cs
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size)
 
     if train_path:
-        pd.concat([X_train, y_train], axis = 1).to_csv(train_path)
+        directory = os.path.dirname(train_path)
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+        pd.concat([X_train, y_train], axis=1).to_parquet(train_path)
     if test_path:
-        pd.concat([X_test, y_test], axis = 1).to_csv(test_path)
+        directory = os.path.dirname(test_path)
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+        pd.concat([X_test, y_test], axis=1).to_parquet(test_path)
 
     return X_train, X_test, y_train, y_test
 
