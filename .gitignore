@@ -4,3 +4,4 @@ recording.log
 .env
 data/
 *.parquet
+titanic/
