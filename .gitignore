@@ -2,3 +2,5 @@ config.yaml
 __pycache__/
 recording.log
 .env
+train.csv
+test.csv
